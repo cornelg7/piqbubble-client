@@ -1,0 +1,217 @@
+---
+export interface Props {
+	text: string;
+	id: string;
+}
+
+const { text, id } = Astro.props;
+const maskId = `bb-mask-${id}`;
+const maskUrl = `url(#${maskId})`;
+---
+
+<div class="bb-container" data-bbId={id}>
+  <span class="bb-text">
+		<span class="bb-text-inner">
+			{text}
+		</span>
+	</span>
+  <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" class="bb-svg" viewBox="0 0 200 110">
+		<defs>
+			<mask {id}={maskId} class="bb-mask" x="0" y="0" width="80" height="30">
+				<rect width="200" height="110" fill="black"/>
+				<circle cx="102" cy="52" r="0" fill="white"/>
+			</mask>
+		</defs>
+    <path class="bb-path" {mask}={maskUrl} d="M 42 37 C 75 2 155 24 167 44 C 181 63 181 109 146 81 C 121 65 85 77 64 95 C 39 109 16 91 21 43 C 49 -15 96 40.6667 129 52 Z"/>
+  </svg>
+</div>
+
+<script>
+	import {getRandomSvgPath, getNewBBObject} from '../utils/BubbleButton.utils';
+
+	[...document.querySelectorAll('.bb-container')].forEach((container) => {
+		const bb = getNewBBObject();
+		const svgPath = getRandomSvgPath();
+		const bubble = container.querySelector('.bb-path');
+
+		function startAnim() {
+			bb.mouseEntered = true;
+			if (bb.ending) {
+				bb.alreadyEnding = true;
+				return;
+			}
+			bb.height = 0;
+			bb.alreadyEnding = false;
+			bb.firstTime = true;
+			bb.lastUpdated = undefined;
+			bb.totalTime = 0;
+			bb.starting = true;
+			tick();
+		};
+
+		function stopAnim() {
+			bb.mouseEntered = false;
+			if (!bb.alreadyEnding) {
+				bb.ending = true;
+			}
+			bb.starting = false;
+		};
+
+		function tick() {
+			if (bb.firstTime || bb.starting || bb.ending) {
+				var now = window.Date.now();
+				if (bb.lastUpdate) {
+					var elapsed = (now-bb.lastUpdate) / 1000;
+					bb.lastUpdate = now;
+					bb.totalTime += elapsed;
+					var factor = bb.totalTime*Math.PI;
+					bubble.setAttribute('d', buildPath(factor));
+					bb.firstTime = false;
+				} else {
+					bb.lastUpdate = now;
+				}
+				bb.animFrame = window.requestAnimationFrame(tick);
+			} else {
+				window.cancelAnimationFrame(bb.animFrame);
+			}
+		};
+
+		function buildPath(factor) {
+			if (bb.starting) {
+				bb.height += bb.heightVelocity;
+			}
+			if (bb.ending) {
+				if (bb.height - bb.heightVelocity > 0) {
+					bb.height -= bb.heightVelocity;
+				} else {
+					bb.ending = false;
+					if (bb.mouseEntered) {
+						startAnim();
+					}
+				}
+			}
+			let mcPoints = svgPath.split('Z')[0].split('M')[1].split('C').map(mcPoint => mcPoint.trim().split(' ').map(point => Number(point)));
+			if (!bb.pointsMinValues || !bb.pointsMaxValues || !bb.pointsDirections || !bb.pointsMaxSpeeds || !bb.pointsSpeeds || !bb.pointsAccs) {
+				mcPoints.forEach((mcPoint, i) => {
+					bb.pointsMinValues = [];
+					bb.pointsMaxValues = [];
+					bb.pointsDirections = [];
+					bb.pointsMaxSpeeds = [];
+					bb.pointsSpeeds = [];
+					bb.pointsAccs = [];
+				});
+				mcPoints.forEach((mcPoint, i) => {
+					bb.pointsMinValues.push(mcPoint.map((point, j) => {
+						const isX = j % 2 === 0;
+						return point - (isX ? bb.minimumMinValueDifX : bb.minimumMinValueDifY) * Math.random();
+					}));
+					bb.pointsMaxValues.push(mcPoint.map((point, j) => {
+						const isX = j % 2 === 0;
+						return point - (isX ? bb.maximumMaxValueDifX : bb.maximumMaxValueDifY) * Math.random();
+					}));
+					bb.pointsDirections.push(mcPoint.map((point, j) => {
+						return Math.random() > 0.5 ? 1 : -1;
+					}));
+					bb.pointsMaxSpeeds.push(mcPoint.map((point, j) => {
+						const isX = j % 2 === 0;
+						return isX ? (bb.minSpeedX + Math.random() * bb.maxSpeedX) : (bb.minSpeedY + Math.random() * bb.maxSpeedY);
+					}));
+					bb.pointsSpeeds.push(mcPoint.map((point, j) => {
+						return 0;
+					}));
+					bb.pointsAccs.push(mcPoint.map((point, j) => {
+						const isX = j % 2 === 0;
+						return isX ? (bb.minAccX + Math.random() * bb.maxAccX) : (bb.minAccY + Math.random() * bb.maxAccY);
+					}));
+				});
+			}
+			
+			/// Change points
+			mcPoints = mcPoints.map((mcPoint, i) => {
+				return mcPoint.map((point, j) => {
+					const isX = j % 2 === 0;
+					const actualFactor = factor + i;
+					// Update speed
+					bb.pointsSpeeds[i][j] = bb.pointsSpeeds[i][j] + bb.pointsAccs[i][j] > bb.pointsMaxSpeeds[i][j] ? bb.pointsSpeeds[i][j] : bb.pointsSpeeds[i][j] + bb.pointsAccs[i][j];
+					// Update direction
+					let change = bb.pointsDirections[i][j] * bb.pointsSpeeds[i][j] * (isX ? Math.cos(actualFactor) : Math.sin(actualFactor));
+					bb.pointsDirections[i][j] = point + change > bb.pointsMaxValues[i][j] && point + change < bb.pointsMinValues[i][j]
+						? 0 
+						: (point + change > bb.pointsMaxValues[i][j] 
+							? -1 
+							: (point + change < bb.pointsMinValues[i][j] 
+									? 1 
+									: bb.pointsDirections[i][j]
+								)
+							);
+					change = bb.pointsDirections[i][j] * bb.pointsSpeeds[i][j] * (isX ? Math.cos(actualFactor) : Math.sin(actualFactor));
+					return Math.round(point + change, 5);
+				});
+			});
+			let SVGString = `${mcPoints.map((mcPoint, i) => `${i === 0 ? 'M' : 'C'} ${mcPoint.join(' ')} `)} Z`;
+			return SVGString;
+		}
+
+		container.addEventListener('mouseenter', startAnim);
+		container.addEventListener('mouseleave', stopAnim);
+
+		tick();
+	});
+</script>
+
+<style lang="scss">
+	.bb-container {
+		display: inline-block;
+		width: 250px;
+		height: 150px;
+		position: relative;
+		top: 0px;
+		left: 0px;
+		cursor: pointer;
+		
+		.bb-text {
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			align-items: center;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			text-align: center;
+			z-index: 10;
+			font-size: 1.2rem;
+			transition: color .8s ease;
+			.bb-text-inner {
+				margin: 1rem;
+			}
+		}
+
+		.bb-svg {
+			position: absolute;
+			.bb-mask circle {
+				transition: r .8s ease;
+			}
+			.bb-path {
+				transition: fill .4s ease;
+				fill: #000;
+			}
+		}
+
+		&:hover {
+			.bb-text {
+				color: white;
+			}
+			.bb-svg {
+				.bb-mask circle {
+					r: 100;
+				}
+				.bb-path {
+					fill: #000;
+				}
+			}
+		}
+	}
+</style>
