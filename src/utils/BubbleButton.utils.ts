@@ -64,5 +64,6 @@ export let getNewBBObject = () => ({
   maxAccX: 0.1,
   maxAccY: 0.2,
   lastUpdate: undefined,
+  lastUpdated: undefined,
   totalTime: 0,
 });

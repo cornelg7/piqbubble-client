@@ -1,12 +1,21 @@
 ---
+import { colors } from '../utils/General.utils';
+
 export interface Props {
 	text: string;
 	id: string;
+	light: boolean;
 }
 
-const { text, id } = Astro.props;
+const { text, id, light } = Astro.props;
 const maskId = `bb-mask-${id}`;
 const maskUrl = `url(#${maskId})`;
+const rectFill = 'black';
+const circleFill = 'white';
+const bbPathFill = light ? colors['dark-1'] : colors['light-2'];
+const bbHoverPathFill = light ? colors['dark-1'] : colors['light-2'];
+const bbHoverTextColor = light ? colors['light-1'] : colors['dark-1'];
+const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 ---
 
 <div class="bb-container" data-bbId={id}>
@@ -17,12 +26,12 @@ const maskUrl = `url(#${maskId})`;
 	</span>
   <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" class="bb-svg" viewBox="0 0 200 110">
 		<defs>
-			<mask {id}={maskId} class="bb-mask" x="0" y="0" width="80" height="30">
-				<rect width="200" height="110" fill="black"/>
-				<circle cx="102" cy="52" r="0" fill="white"/>
+			<mask id={maskId} class="bb-mask" x="0" y="0" width="80" height="30">
+				<rect width="200" height="110" fill={rectFill}/>
+				<circle cx="102" cy="52" r="0" fill={circleFill}/>
 			</mask>
 		</defs>
-    <path class="bb-path" {mask}={maskUrl} d="M 42 37 C 75 2 155 24 167 44 C 181 63 181 109 146 81 C 121 65 85 77 64 95 C 39 109 16 91 21 43 C 49 -15 96 40.6667 129 52 Z"/>
+    <path class="bb-path" mask={maskUrl} d="M 42 37 C 75 2 155 24 167 44 C 181 63 181 109 146 81 C 121 65 85 77 64 95 C 39 109 16 91 21 43 C 49 -15 96 40.6667 129 52 Z"/>
   </svg>
 </div>
 
@@ -127,6 +136,7 @@ const maskUrl = `url(#${maskId})`;
 			}
 			
 			/// Change points
+			// @ts-ignore
 			mcPoints = mcPoints.map((mcPoint, i) => {
 				return mcPoint.map((point, j) => {
 					const isX = j % 2 === 0;
@@ -145,7 +155,7 @@ const maskUrl = `url(#${maskId})`;
 								)
 							);
 					change = bb.pointsDirections[i][j] * bb.pointsSpeeds[i][j] * (isX ? Math.cos(actualFactor) : Math.sin(actualFactor));
-					return Math.round(point + change, 5);
+					return (point + change).toFixed(5);
 				});
 			});
 			let SVGString = `${mcPoints.map((mcPoint, i) => `${i === 0 ? 'M' : 'C'} ${mcPoint.join(' ')} `)} Z`;
@@ -159,7 +169,7 @@ const maskUrl = `url(#${maskId})`;
 	});
 </script>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ bbPathFill, bbHoverPathFill, bbHoverTextColor, bbTextColor }}>
 	.bb-container {
 		display: inline-block;
 		width: 250px;
@@ -184,6 +194,7 @@ const maskUrl = `url(#${maskId})`;
 			z-index: 10;
 			font-size: 1.2rem;
 			transition: color .8s ease;
+			color: var(--bbTextColor);
 			.bb-text-inner {
 				margin: 1rem;
 			}
@@ -196,20 +207,20 @@ const maskUrl = `url(#${maskId})`;
 			}
 			.bb-path {
 				transition: fill .4s ease;
-				fill: #000;
+				fill: var(--bbPathFill);
 			}
 		}
 
 		&:hover {
 			.bb-text {
-				color: white;
+				color: var(--bbHoverTextColor);
 			}
 			.bb-svg {
 				.bb-mask circle {
-					r: 100;
+					r: 120;
 				}
 				.bb-path {
-					fill: #000;
+					fill: var(--bbHoverPathFill);
 				}
 			}
 		}
