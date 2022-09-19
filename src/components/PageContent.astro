@@ -3,6 +3,7 @@ export interface Props {
 	light: boolean;
 }
 
+import { changeIsLight } from '../utils/General.utils';
 import BubbleButton from './BubbleButton.astro';
 import Card from './Card.astro';
 
@@ -11,6 +12,7 @@ const { light } = Astro.props;
 
 <div>
 	<main>
+		<button class="change-theme">Change</button>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
 		<p class="instructions">
 			Check out the <code>src/pages</code> directory to get started.<br />
@@ -44,6 +46,13 @@ const { light } = Astro.props;
 		</ul>
 	</main>
 </div>
+
+<script>
+import { changeIsLight } from "../utils/General.utils";
+
+	console.log('add eventlistener');
+	document.querySelector('.change-theme').addEventListener('click', changeIsLight);
+</script>
 
 <style lang="scss"> 
 	@import "../styles/global";

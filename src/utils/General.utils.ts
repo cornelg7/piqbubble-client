@@ -1,3 +1,5 @@
+import { atom } from 'nanostores';
+
 export const colors = {
     'light-1': '#F5F6F4',
     'light-2': '#E0E2DB',
@@ -12,3 +14,15 @@ export const getColors = (light: boolean) => {
         ? {backgroundColor: colors['light-2'], foregroundColor: colors['dark-1']} 
         : {backgroundColor: colors['dark-1'], foregroundColor: colors['light-2']};
 }
+
+export const isLight = atom<boolean>(true);
+
+export const isLightSubscribe = (cb) => {
+    isLight.subscribe(cb);
+}
+
+export const changeIsLight = () => {
+    console.log('changeIsLight');
+    console.log('isLight.get()', isLight.get());
+    isLight.set(!isLight.get())
+};

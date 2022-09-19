@@ -14,5 +14,8 @@
     "astro": "^1.1.1",
     "sass": "^1.54.5",
     "svelte": "^3.49.0"
+  },
+  "dependencies": {
+    "nanostores": "^0.7.0"
   }
 }

@@ -2,11 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import VariableColorPageLayout from '../layouts/VariableColorPageLayout.astro';
 import PageContent from '../components/PageContent.astro';
+import { isLight, isLightSubscribe } from '../utils/General.utils';
 
-let light = true;
+let light = isLight.get();
+isLightSubscribe((value: boolean) => {
+	console.log('isLight changed', value);
+})
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout client:load title="Welcome to Astro.">
 	<VariableColorPageLayout light={light}>
 		<PageContent light={light}/>
 	</VariableColorPageLayout>
