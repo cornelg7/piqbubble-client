@@ -2,21 +2,99 @@
 import Layout from '../layouts/Layout.astro';
 import VariableColorPageLayout from '../layouts/VariableColorPageLayout.astro';
 import PageContent from '../components/PageContent.astro';
-import { isLight, isLightSubscribe } from '../utils/General.utils';
-
-let light = isLight.get();
-isLightSubscribe((value: boolean) => {
-	console.log('isLight changed', value);
-})
 ---
 
-<Layout client:load title="Welcome to Astro.">
-	<VariableColorPageLayout light={light}>
-		<PageContent light={light}/>
-	</VariableColorPageLayout>
+<Layout title="Welcome to Astro.">
+	<div class="page">
+		<VariableColorPageLayout light={true}>
+			<PageContent light={true}/>
+		</VariableColorPageLayout>
+	</div>
+	<div class="page">
+		<VariableColorPageLayout light={false}>
+			<PageContent light={false}/>
+		</VariableColorPageLayout>
+	</div>
 </Layout>
+
+<script>
+	import anime from 'animejs/lib/anime.es.js';
+	window.sessionStorage.setItem('theme', 'dark');
+	window.addEventListener('theme-change', (event) => {
+		const themeLight = window.sessionStorage.getItem('theme') === 'light';
+		// @ts-ignore
+		const {x, y} = event?.detail?.event;
+		// @ts-ignore
+		if (themeLight) {
+			startRadialTransition([...document.querySelectorAll('.page')][0], 0, themeLight, x, y);
+		} else {
+			startRadialTransition([...document.querySelectorAll('.page')][1], 1, themeLight, x, y);
+		}
+	});
+
+	let isDuringAnim = false;
+
+	function startRadialTransition(e: Element, i: number, themeLight: boolean, x: number, y: number) {
+		if (isDuringAnim) {
+			return;
+		}
+		isDuringAnim = true;
+		
+		// @ts-ignore
+		window.justSwitchedTheme = true;
+		
+		let nextItem = i + 1;
+		if (nextItem >= [...document.querySelectorAll('.page')].length){
+			nextItem = 0;
+		}
+		
+		const nextElement: HTMLElement = [...document.querySelectorAll('.page')][nextItem] as HTMLElement;
+		const zIndex = getZIndex(e) + 1;
+		nextElement.style.zIndex = `${zIndex}`;
+		nextElement.style.clipPath = 'circle(0% at '+ x +'px '+ y +'px)';
+		
+		anime({
+			targets: nextElement,
+			update: function(anim) { 
+				nextElement.style.clipPath = 'circle(' + (anim.progress*1.25) + '% at '+ x +'px '+ y +'px)';
+			},
+			complete: () => {
+				window.sessionStorage.setItem('theme', themeLight ? 'dark' : 'light');
+				isDuringAnim = false;
+			}
+		});
+	}
+
+	function getZIndex(el) {
+		let firefox = getStyle(el, 'zIndex');
+		if (!isNaN(parseInt(firefox))) {
+			return parseInt(firefox);
+		}
+		return parseInt(getStyle(el, 'z-index'));
+	}
+
+	function getStyle(el, styleProp) {
+		let value;
+		if (window.getComputedStyle) {
+			value = document.defaultView.getComputedStyle(el, null).getPropertyValue(styleProp); 
+		}
+		else if (el.currentStyle) {
+			value = el.currentStyle[styleProp];
+		}                     
+		return value;
+	}
+</script>
 
 <style lang="scss">
 	@import "../styles/global";
 
+	.page {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		display: flex;
+		align-items: stretch;
+		justify-content: stretch;
+	}
 </style>

@@ -66,4 +66,5 @@ export let getNewBBObject = () => ({
   lastUpdate: undefined,
   lastUpdated: undefined,
   totalTime: 0,
+  firstTimeEnterAfterThemeChange: false,
 });

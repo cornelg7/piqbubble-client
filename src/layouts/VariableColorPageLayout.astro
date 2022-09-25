@@ -9,15 +9,16 @@ const { light } = Astro.props;
 const { foregroundColor, backgroundColor } = getColors(light);
 ---
 
-<div class="page">
+<div class="variable-color-page">
 	<slot />
 </div>
 
 <style lang="scss" define:vars={{ foregroundColor, backgroundColor }}>
 	@import "../styles/global";
 
-	.page {
+	.variable-color-page {
 		background-color: var(--backgroundColor);
 		color: var(--foregroundColor);
+		flex: 1;
 	}
 </style>

@@ -16,6 +16,7 @@
     "svelte": "^3.49.0"
   },
   "dependencies": {
+    "animejs": "^3.2.1",
     "nanostores": "^0.7.0"
   }
 }

@@ -19,20 +19,20 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 ---
 
 <div class="bb-container" data-bbId={id}>
-  <span class="bb-text">
+  	<span class="bb-text">
 		<span class="bb-text-inner">
 			{text}
 		</span>
 	</span>
-  <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" class="bb-svg" viewBox="0 0 200 110">
-		<defs>
-			<mask id={maskId} class="bb-mask" x="0" y="0" width="80" height="30">
-				<rect width="200" height="110" fill={rectFill}/>
-				<circle cx="102" cy="52" r="0" fill={circleFill}/>
-			</mask>
-		</defs>
-    <path class="bb-path" mask={maskUrl} d="M 42 37 C 75 2 155 24 167 44 C 181 63 181 109 146 81 C 121 65 85 77 64 95 C 39 109 16 91 21 43 C 49 -15 96 40.6667 129 52 Z"/>
-  </svg>
+	<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" class="bb-svg" viewBox="0 0 200 110">
+			<defs>
+				<mask id={maskId} class="bb-mask" x="0" y="0" width="80" height="30">
+					<rect width="200" height="110" fill={rectFill}/>
+					<circle cx="102" cy="52" r="0" fill={circleFill}/>
+				</mask>
+			</defs>
+		<path class="bb-path" mask={maskUrl} d="M 42 37 C 75 2 155 24 167 44 C 181 63 181 109 146 81 C 121 65 85 77 64 95 C 39 109 16 91 21 43 C 49 -15 96 40.6667 129 52 Z"/>
+	</svg>
 </div>
 
 <script>
@@ -44,6 +44,20 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 		const bubble = container.querySelector('.bb-path');
 
 		function startAnim() {
+			if (bb.firstTimeEnterAfterThemeChange) {
+				bb.firstTimeEnterAfterThemeChange = false;
+				bb.ending = false;
+			}
+			// @ts-ignore
+			if (window.justSwitchedTheme) {
+				// @ts-ignore
+				window.justSwitchedTheme = false;
+				bb.firstTimeEnterAfterThemeChange = true;
+				container.classList.add('disable-hover');
+				stopAnim();
+				return;
+			}
+			container.classList.remove('disable-hover');
 			bb.mouseEntered = true;
 			if (bb.ending) {
 				bb.alreadyEnding = true;
@@ -169,6 +183,14 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 	});
 </script>
 
+<script>
+	[...document.querySelectorAll('.bb-text-inner')].forEach(el => {
+		el.addEventListener('click', (event) => {
+			window.dispatchEvent(new CustomEvent('theme-change', { detail: { event } }));
+		})
+	});
+</script>
+
 <style lang="scss" define:vars={{ bbPathFill, bbHoverPathFill, bbHoverTextColor, bbTextColor }}>
 	.bb-container {
 		display: inline-block;
@@ -177,7 +199,7 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 		position: relative;
 		top: 0px;
 		left: 0px;
-		cursor: pointer;
+		cursor: default;
 		
 		.bb-text {
 			display: flex;
@@ -197,6 +219,7 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 			color: var(--bbTextColor);
 			.bb-text-inner {
 				margin: 1rem;
+				cursor: pointer;
 			}
 		}
 
@@ -211,7 +234,7 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 			}
 		}
 
-		&:hover {
+		&:not(.disable-hover):hover {
 			.bb-text {
 				color: var(--bbHoverTextColor);
 			}
