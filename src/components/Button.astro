@@ -1,24 +1,50 @@
 ---
+import { getColors } from '../utils/General.utils';
+
 export interface Props {
 	href: string;
+	light: boolean;
 	svg?: string;
 }
 
-const { href, svg = '' } = Astro.props;
+const { href, light, svg = '' } = Astro.props;
+const { foregroundColor, backgroundColor } = getColors(light);
 ---
 
-<a href={href} class="button-container">
+<a href={href} target="_blank" class="button-container">
 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<path d="M 100 0 A 1 1 0 0 0 106 196 A 1 1 0 0 0 100 0 M 98 12 A 1 1 0 0 1 99 174 A 1 1 0 0 1 98 12 M 85 21 C 56 26 45 37 35 58 C 63 59 60 31 85 21 Z"/>
  	</svg>
-	<slot></slot>
+	<div class="button-inner">
+		<slot></slot>
+	</div>
 </a>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ foregroundColor, backgroundColor }}>
 	@import "../styles/global";
 
 	.button-container {
 		display: inline-block;
-		width: 150px;
+		width: 42px;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		svg path {
+			fill: var(--foregroundColor);
+			transition: fill .8s ease;
+		}
+		.button-inner {
+			position: absolute;
+			width: 40%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		&:hover {
+			svg path {
+				fill: var(--backgroundColor);
+			}
+		}
 	}
 </style>

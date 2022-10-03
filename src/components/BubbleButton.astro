@@ -5,9 +5,10 @@ export interface Props {
 	text: string;
 	id: string;
 	light: boolean;
+	containerTargetId?: string;
 }
 
-const { text, id, light } = Astro.props;
+const { text, id, light, containerTargetId = undefined } = Astro.props;
 const maskId = `bb-mask-${id}`;
 const maskUrl = `url(#${maskId})`;
 const rectFill = 'black';
@@ -18,7 +19,7 @@ const bbHoverTextColor = light ? colors['light-1'] : colors['dark-1'];
 const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 ---
 
-<div class="bb-container" data-bbId={id}>
+<div class="bb-container" data-bbId={id} data-containertargetid={containerTargetId} data-light={light ? 'light' : 'dark'}>
   	<span class="bb-text">
 		<span class="bb-text-inner">
 			{text}
@@ -36,7 +37,8 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 </div>
 
 <script>
-	import {getRandomSvgPath, getNewBBObject} from '../utils/BubbleButton.utils';
+	import { getRandomSvgPath, getNewBBObject } from '../utils/BubbleButton.utils';
+	import { colors } from '../utils/General.utils';
 
 	[...document.querySelectorAll('.bb-container')].forEach((container) => {
 		const bb = getNewBBObject();
@@ -59,6 +61,7 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 			}
 			container.classList.remove('disable-hover');
 			bb.mouseEntered = true;
+			openBubbleFn();
 			if (bb.ending) {
 				bb.alreadyEnding = true;
 				return;
@@ -78,6 +81,7 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 				bb.ending = true;
 			}
 			bb.starting = false;
+			closeBubbleFn();
 		};
 
 		function tick() {
@@ -176,14 +180,60 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 			return SVGString;
 		}
 
-		container.addEventListener('mouseenter', startAnim);
-		container.addEventListener('mouseleave', stopAnim);
-
+		// @ts-ignore
+		const actualContainerId = container?.dataset?.containertargetid;
+		const actualContainer = (actualContainerId === undefined 
+			? container 
+			: document.querySelector(`#${actualContainerId}`)) ?? container;
+		
+		// Start / end animations
+		actualContainer.addEventListener('mouseleave', stopAnim);
+		actualContainer.addEventListener('mouseenter', startAnim);
+		// Hover element Show / hide svg
+		const openBubbleFn = () => {
+			// @ts-ignore
+			const light = container?.dataset?.light;
+			const bbPathFill = light === 'light' ? colors['dark-1'] : colors['light-2'];
+			const bbHoverPathFill = light === 'light' ? colors['dark-1'] : colors['light-2'];
+			const bbHoverTextColor = light === 'light' ? colors['light-1'] : colors['dark-1'];
+			const bbTextColor = light === 'light' ? colors['dark-1'] : colors['light-2'];
+			const bbSvg = container.querySelector('.bb-svg');
+			const maskCircle = bbSvg.querySelector('.bb-mask circle');
+			maskCircle.setAttribute('r', '120');
+			const bbPath = bbSvg.querySelector('.bb-path');
+			bbPath.setAttribute('fill', bbHoverPathFill);
+			const bbText = container.querySelector('.bb-text');
+			if (bbText) {
+				// @ts-ignore
+				bbText.style.color = bbHoverTextColor;
+			}
+		};
+		const closeBubbleFn = () => {
+			// @ts-ignore
+			const light = container?.dataset?.light;
+			const bbPathFill = light === 'light' ? colors['dark-1'] : colors['light-2'];
+			const bbHoverPathFill = light === 'light' ? colors['dark-1'] : colors['light-2'];
+			const bbHoverTextColor = light === 'light' ? colors['light-1'] : colors['dark-1'];
+			const bbTextColor = light === 'light' ? colors['dark-1'] : colors['light-2'];
+			const bbSvg = container.querySelector('.bb-svg');
+			const maskCircle = bbSvg.querySelector('.bb-mask circle');
+			maskCircle.setAttribute('r', '0');
+			const bbPath = bbSvg.querySelector('.bb-path');
+			bbPath.setAttribute('fill', bbPathFill);
+			const bbText = container.querySelector('.bb-text');
+			if (bbText) {
+				// @ts-ignore
+				bbText.style.color = bbTextColor;
+			}
+		};
+		
 		tick();
 	});
+	
 </script>
 
 <script>
+	// TODO add this effect on actualContainers as well
 	[...document.querySelectorAll('.bb-text-inner')].forEach(el => {
 		el.addEventListener('click', (event) => {
 			window.dispatchEvent(new CustomEvent('theme-change', { detail: { event } }));
@@ -234,18 +284,18 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 			}
 		}
 
-		&:not(.disable-hover):hover {
-			.bb-text {
-				color: var(--bbHoverTextColor);
-			}
-			.bb-svg {
-				.bb-mask circle {
-					r: 120;
-				}
-				.bb-path {
-					fill: var(--bbHoverPathFill);
-				}
-			}
-		}
+		// &:not(.disable-hover):hover {
+		// 	.bb-text {
+		// 		// color: var(--bbHoverTextColor);
+		// 	}
+		// 	.bb-svg {
+		// 		.bb-mask circle {
+		// 			// r: 120;
+		// 		}
+		// 		.bb-path {
+		// 			// fill: var(--bbHoverPathFill);
+		// 		}
+		// 	}
+		// }
 	}
 </style>
