@@ -6,9 +6,10 @@ export interface Props {
 	id: string;
 	light: boolean;
 	containerTargetId?: string;
+	shouldChangeTheme?: boolean;
 }
 
-const { text, id, light, containerTargetId = undefined } = Astro.props;
+const { text, id, light, containerTargetId = undefined, shouldChangeTheme = false } = Astro.props;
 const maskId = `bb-mask-${id}`;
 const maskUrl = `url(#${maskId})`;
 const rectFill = 'black';
@@ -19,7 +20,7 @@ const bbHoverTextColor = light ? colors['light-1'] : colors['dark-1'];
 const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 ---
 
-<div class="bb-container" data-bbId={id} data-containertargetid={containerTargetId} data-light={light ? 'light' : 'dark'}>
+<div class="bb-container" data-bbId={id} data-containertargetid={containerTargetId} data-light={light ? 'light' : 'dark'} data-shouldchangetheme={shouldChangeTheme ? 'true' : 'false'}>
   	<span class="bb-text">
 		<span class="bb-text-inner">
 			{text}
@@ -207,6 +208,21 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 				// @ts-ignore
 				bbText.style.color = bbHoverTextColor;
 			}
+			// @ts-ignore
+			const targetId = container?.dataset?.containertargetid;
+			if (!targetId) {
+				return;
+			}
+			const targetParts = targetId.split('-');
+			targetParts[0] = 'light';
+			const lightTargetId = targetParts.join('-');
+			targetParts[0] = 'dark';
+			const darkTargetId = targetParts.join('-');
+			const lightTargetElement = document.querySelector(`#${lightTargetId}`);
+			const darkTargetElement = document.querySelector(`#${darkTargetId}`);
+
+			lightTargetElement?.querySelector('.button-container')?.classList?.remove('hover-disable');
+			darkTargetElement?.querySelector('.button-container')?.classList?.remove('hover-disable');
 		};
 		const closeBubbleFn = () => {
 			// @ts-ignore
@@ -233,11 +249,38 @@ const bbTextColor = light ? colors['dark-1'] : colors['light-2'];
 </script>
 
 <script>
-	// TODO add this effect on actualContainers as well
+	// Add click to change theme on text inner
 	[...document.querySelectorAll('.bb-text-inner')].forEach(el => {
 		el.addEventListener('click', (event) => {
 			window.dispatchEvent(new CustomEvent('theme-change', { detail: { event } }));
 		})
+	});
+	// Add click to change theme on target containers
+	[...document.querySelectorAll('.bb-container')].forEach(el => {
+		// @ts-ignore
+		if (el.dataset?.shouldchangetheme === 'true') {
+			// @ts-ignore
+			const targetId = el?.dataset?.containertargetid;
+			if (!targetId) {
+				return;
+			}
+			const targetParts = targetId.split('-');
+			targetParts[0] = 'light';
+			const lightTargetId = targetParts.join('-');
+			targetParts[0] = 'dark';
+			const darkTargetId = targetParts.join('-');
+			const lightTargetElement = document.querySelector(`#${lightTargetId}`);
+			const darkTargetElement = document.querySelector(`#${darkTargetId}`);
+
+			const targetOnClick = (event) => {
+				lightTargetElement?.querySelector('.button-container')?.classList?.add('hover-disable');
+				darkTargetElement?.querySelector('.button-container')?.classList?.add('hover-disable');
+				window.dispatchEvent(new CustomEvent('theme-change', { detail: { event } }));
+			}
+
+			lightTargetElement?.addEventListener('click', targetOnClick);
+			darkTargetElement?.addEventListener('click', targetOnClick);
+		}
 	});
 </script>
 

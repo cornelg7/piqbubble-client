@@ -15,7 +15,7 @@ const { foregroundColor, backgroundColor } = getColors(light);
 </svg>
   
 <style lang="scss" is:global define:vars={{ foregroundColor, backgroundColor }}>
-	.button-container:hover {
+	.button-container:not(.hover-disable):hover {
 		#linkedin-logo path {
 			fill: var(--backgroundColor);
 		}

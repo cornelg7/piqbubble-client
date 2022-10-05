@@ -5,6 +5,8 @@ export const colors = {
     'dark-1':  '#30321C',
     'accent-1': '#C585B3',
     'accent-2': '#BC69AA',
+    'color-logo-1': '#756d75',
+    'color-logo-2': '#c586b3',
 }
 
 export const getColors = (light: boolean) => {

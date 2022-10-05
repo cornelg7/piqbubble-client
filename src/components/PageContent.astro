@@ -5,10 +5,12 @@ export interface Props {
 
 import BubbleButton from './BubbleButton.astro';
 import Button from './Button.astro';
+import ButtonWithBubbleButton from './ButtonWithBubbleButton.astro';
 import LinkedInLogo from './company-logos/LinkedInLogo.astro';
 import Logo from './Logo.astro';
 
 const { light } = Astro.props;
+const currentYear = (new Date()).getFullYear();
 ---
 
 <div class="container">
@@ -16,54 +18,64 @@ const { light } = Astro.props;
 		<Logo light={light}></Logo>
 	</div>
 	<main>
-		<p class="instructions">
-			Check out the <code>src/pages</code> directory to get started.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<!-- TODO move this into own component -->
-		<div class="bubble-button-behind-button-container">
-			<div class="bubble-button-behind-button-item">
-				<BubbleButton 
-					text="" 
-					id={(light ? 'light' : 'dark') + '-linkedin'} 
-					light={light} 
-					containerTargetId={(light ? 'light' : 'dark') + '-linkedin-logo-container'}
-				/>
-			</div>
-			<div class="bubble-button-behind-button-item unbubble-item" id={(light ? 'light' : 'dark') + '-linkedin-logo-container'}>
-				<Button href="https://www.google.com" light={light}>
-					<LinkedInLogo light={light}></LinkedInLogo>
-				</Button>
-			</div>
-		</div>
-		<hr>
-		<hr>
-		<hr>
-		<hr>
-		<hr>
-		<BubbleButton text="portfolio" id={(light ? 'light' : 'dark') + '-portfolio'} light={light} />
-		<BubbleButton text="about" id={(light ? 'light' : 'dark') + '-about'} light={light} />
+		<ul class='circle-container'>
+			<ButtonWithBubbleButton 
+				href={undefined} 
+				light={light} 
+				logoNameId="linkedin"
+				position={0}
+				shouldChangeTheme={true}
+			>
+				<LinkedInLogo light={light}></LinkedInLogo>
+			</ButtonWithBubbleButton>
+
+			<ButtonWithBubbleButton 
+				href="https://www.google.com" 
+				light={light} 
+				logoNameId="instagram"
+				position={1}
+			>
+				<LinkedInLogo light={light}></LinkedInLogo>
+			</ButtonWithBubbleButton>
+			
+			<ButtonWithBubbleButton 
+				href="https://www.google.com" 
+				light={light} 
+				logoNameId="instagram2"
+				position={2}
+			>
+				<LinkedInLogo light={light}></LinkedInLogo>
+			</ButtonWithBubbleButton>
+
+			<ButtonWithBubbleButton 
+				href="https://www.google.com" 
+				light={light} 
+				logoNameId="instagram3"
+				position={3}
+			>
+				<LinkedInLogo light={light}></LinkedInLogo>
+			</ButtonWithBubbleButton>
+
+			<ButtonWithBubbleButton 
+				href="https://www.google.com" 
+				light={light} 
+				logoNameId="instagram4"
+				position={4}
+			>
+				<LinkedInLogo light={light}></LinkedInLogo>
+			</ButtonWithBubbleButton>
+		</ul>
+
+		<!-- <BubbleButton text="portfolio" id={(light ? 'light' : 'dark') + '-portfolio'} light={light} />
+		<BubbleButton text="about" id={(light ? 'light' : 'dark') + '-about'} light={light} /> -->
 	</main>
-	<div class="footer-container">
-		Footer here.
-	</div>
+	<footer class="footer-container">
+		<small>Copyright &copy; {currentYear} piqbubble. All Rights Reserved</small>
+	</footer>
 </div>
 
 <style lang="scss"> 
 	@import "../styles/global";
-
-	.bubble-button-behind-button-container {
-		position: relative;
-		.bubble-button-behind-button-item {
-			position: absolute;
-			z-index: 2;
-		}
-		.unbubble-item {
-			top: 50px;
-			left: 105px;
-			transition: color .8s ease;
-		}
-	}
 	
 	.container {
 		margin: auto;
@@ -86,9 +98,12 @@ const { light } = Astro.props;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-		}
-		.footer-container {
-
+			.circle-container {
+				width: 242px;
+				height: 300px;
+				padding: 0;
+				margin-top: 7em;
+			}
 		}
 	}
 

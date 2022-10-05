@@ -30,6 +30,7 @@ const { foregroundColor, backgroundColor } = getColors(light);
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		cursor: pointer;
 		svg path {
 			fill: var(--foregroundColor);
 			transition: fill .8s ease;
@@ -41,7 +42,7 @@ const { foregroundColor, backgroundColor } = getColors(light);
 			justify-content: center;
 			align-items: center;
 		}
-		&:hover {
+		&:not(.hover-disable):hover {
 			svg path {
 				fill: var(--backgroundColor);
 			}
