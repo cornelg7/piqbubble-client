@@ -6,7 +6,11 @@ export interface Props {
 import BubbleButton from './BubbleButton.astro';
 import Button from './Button.astro';
 import ButtonWithBubbleButton from './ButtonWithBubbleButton.astro';
+import Bulb2Logo from './company-logos/Bulb2Logo.astro';
+import BulbLogo from './company-logos/BulbLogo.astro';
 import LinkedInLogo from './company-logos/LinkedInLogo.astro';
+import MailLogo from './company-logos/MailLogo.astro';
+import WhatsappLogo from './company-logos/WhatsappLogo.astro';
 import Logo from './Logo.astro';
 
 const { light } = Astro.props;
@@ -20,8 +24,8 @@ const currentYear = (new Date()).getFullYear();
 	<main>
 		<ul class='circle-container'>
 			<ButtonWithBubbleButton 
-				href={undefined} 
-				light={light} 
+				href="https://linkedin.com/in/cgoran/" 
+				light={light}
 				logoNameId="linkedin"
 				position={0}
 				shouldChangeTheme={true}
@@ -30,39 +34,43 @@ const currentYear = (new Date()).getFullYear();
 			</ButtonWithBubbleButton>
 
 			<ButtonWithBubbleButton 
-				href="https://www.google.com" 
+				href={undefined} 
 				light={light} 
-				logoNameId="instagram"
+				logoNameId="bulb"
 				position={1}
+				shouldChangeTheme={true}
 			>
-				<LinkedInLogo light={light}></LinkedInLogo>
+				<BulbLogo light={light}></BulbLogo>
 			</ButtonWithBubbleButton>
 			
 			<ButtonWithBubbleButton 
-				href="https://www.google.com" 
+				href="https://wa.me/40745511231"
 				light={light} 
-				logoNameId="instagram2"
+				logoNameId="whatsapp"
 				position={2}
+				shouldChangeTheme={true}
 			>
-				<LinkedInLogo light={light}></LinkedInLogo>
+				<WhatsappLogo light={light}></WhatsappLogo>
 			</ButtonWithBubbleButton>
 
 			<ButtonWithBubbleButton 
-				href="https://www.google.com" 
+				href={undefined} 
 				light={light} 
-				logoNameId="instagram3"
+				logoNameId="bulb2"
 				position={3}
+				shouldChangeTheme={true}
 			>
-				<LinkedInLogo light={light}></LinkedInLogo>
+				<Bulb2Logo light={light}></Bulb2Logo>
 			</ButtonWithBubbleButton>
 
 			<ButtonWithBubbleButton 
-				href="https://www.google.com" 
+				href="mailto:cornel@piqbubble.com"
 				light={light} 
-				logoNameId="instagram4"
+				logoNameId="mail"
 				position={4}
+				shouldChangeTheme={true}
 			>
-				<LinkedInLogo light={light}></LinkedInLogo>
+				<MailLogo light={light}></MailLogo>
 			</ButtonWithBubbleButton>
 		</ul>
 
