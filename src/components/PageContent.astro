@@ -1,0 +1,141 @@
+---
+export interface Props {
+	light: boolean;
+}
+
+import BubbleButton from './BubbleButton.astro';
+import Button from './Button.astro';
+import ButtonWithBubbleButton from './ButtonWithBubbleButton.astro';
+import Bulb2Logo from './company-logos/Bulb2Logo.astro';
+import BulbLogo from './company-logos/BulbLogo.astro';
+import LinkedInLogo from './company-logos/LinkedInLogo.astro';
+import MailLogo from './company-logos/MailLogo.astro';
+import WhatsappLogo from './company-logos/WhatsappLogo.astro';
+import Logo from './Logo.astro';
+
+const { light } = Astro.props;
+const currentYear = (new Date()).getFullYear();
+---
+
+<div class="container">
+	<div class="logo-container">
+		<Logo light={light}></Logo>
+	</div>
+	<main>
+		<ul class='circle-container'>
+			<ButtonWithBubbleButton 
+				href="https://linkedin.com/in/cgoran/" 
+				light={light}
+				logoNameId="linkedin"
+				position={0}
+				shouldChangeTheme={true}
+			>
+				<LinkedInLogo light={light}></LinkedInLogo>
+			</ButtonWithBubbleButton>
+
+			<ButtonWithBubbleButton 
+				href={undefined} 
+				light={light} 
+				logoNameId="bulb"
+				position={1}
+				shouldChangeTheme={true}
+			>
+				<BulbLogo light={light}></BulbLogo>
+			</ButtonWithBubbleButton>
+			
+			<ButtonWithBubbleButton 
+				href="https://wa.me/40745511231"
+				light={light} 
+				logoNameId="whatsapp"
+				position={2}
+				shouldChangeTheme={true}
+			>
+				<WhatsappLogo light={light}></WhatsappLogo>
+			</ButtonWithBubbleButton>
+
+			<ButtonWithBubbleButton 
+				href={undefined} 
+				light={light} 
+				logoNameId="bulb2"
+				position={3}
+				shouldChangeTheme={true}
+			>
+				<Bulb2Logo light={light}></Bulb2Logo>
+			</ButtonWithBubbleButton>
+
+			<ButtonWithBubbleButton 
+				href="mailto:cornel@piqbubble.com"
+				light={light} 
+				logoNameId="mail"
+				position={4}
+				shouldChangeTheme={true}
+			>
+				<MailLogo light={light}></MailLogo>
+			</ButtonWithBubbleButton>
+		</ul>
+
+		<!-- <BubbleButton text="portfolio" id={(light ? 'light' : 'dark') + '-portfolio'} light={light} />
+		<BubbleButton text="about" id={(light ? 'light' : 'dark') + '-about'} light={light} /> -->
+	</main>
+	<footer class="footer-container">
+		<small>Copyright &copy; {currentYear} piqbubble. All Rights Reserved</small>
+	</footer>
+</div>
+
+<style lang="scss"> 
+	@import "../styles/global";
+	
+	.container {
+		margin: auto;
+		padding: 2em;
+		max-width: 60ch;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.logo-container {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: stretch;
+			width: 100%;
+			flex: 1 1 100px;
+		}
+		main {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			.circle-container {
+				width: 242px;
+				height: 300px;
+				padding: 0;
+				margin-top: 7em;
+			}
+		}
+	}
+
+	h1 {
+		margin: 2rem 0;
+	}
+
+	.text-gradient {
+		font-weight: 900;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 100% 200%;
+		background-position-y: 100%;
+		border-radius: 0.4rem;
+		animation: pulse 4s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			background-position-y: 0%;
+		}
+		50% {
+			background-position-y: 80%;
+		}
+	}
+</style>
