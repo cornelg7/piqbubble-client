@@ -1,9 +1,13 @@
 ---
+import { getLogoColors } from '../utils/General.utils';
+
 export interface Props {
 	light: boolean;
 }
 
 const { light } = Astro.props;
+
+const { dark, accent } = getLogoColors(light);
 ---
 
 <svg id="piqbubble-logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 215.56 61.32">
@@ -25,10 +29,10 @@ const { light } = Astro.props;
 		<circle class="cls-1" cx="8" cy="29.84" r="8"/>
 		<circle class="cls-2" cx="10" cy="52.32" r="9"/>
 	</g>
-  </svg>
+</svg>
   
 
-<style lang="scss">
+<style lang="scss" define:vars={{ dark, accent }}>
 	@import "../styles/global";
 
 	#piqbubble-logo {
@@ -36,11 +40,11 @@ const { light } = Astro.props;
     	min-width: 100px;
 
 		.cls-1 {
-		  fill: #756d75;
+		  fill: var(--dark);
 		}
   
 		.cls-2 {
-		  fill: #c586b3;
+		  fill: var(--accent);
 		}
 	}
 	
