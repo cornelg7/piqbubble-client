@@ -8,6 +8,7 @@ import Button from './Button.astro';
 import ButtonWithBubbleButton from './ButtonWithBubbleButton.astro';
 import Bulb2Logo from './company-logos/Bulb2Logo.astro';
 import BulbLogo from './company-logos/BulbLogo.astro';
+import EtsyLogo from './company-logos/EtsyLogo.astro';
 import LinkedInLogo from './company-logos/LinkedInLogo.astro';
 import MailLogo from './company-logos/MailLogo.astro';
 import WhatsappLogo from './company-logos/WhatsappLogo.astro';
@@ -54,13 +55,13 @@ const currentYear = (new Date()).getFullYear();
 			</ButtonWithBubbleButton>
 
 			<ButtonWithBubbleButton 
-				href={undefined} 
+				href="https://www.etsy.com/shop/PiqbubbleAiGen"
 				light={light} 
-				logoNameId="bulb2"
+				logoNameId="etsy"
 				position={3}
 				shouldChangeTheme={true}
 			>
-				<Bulb2Logo light={light}></Bulb2Logo>
+				<EtsyLogo light={light}></EtsyLogo>
 			</ButtonWithBubbleButton>
 
 			<ButtonWithBubbleButton 

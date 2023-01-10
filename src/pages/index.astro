@@ -10,6 +10,7 @@ import PageContent from '../components/PageContent.astro';
 			<PageContent light={true}/>
 		</VariableColorPageLayout>
 	</div>
+	
 	<div class="page">
 		<VariableColorPageLayout light={false}>
 			<PageContent light={false}/>
@@ -19,7 +20,7 @@ import PageContent from '../components/PageContent.astro';
 
 <script>
 	import anime from 'animejs/lib/anime.es.js';
-	window.sessionStorage.setItem('theme', 'dark');
+	window.sessionStorage.setItem('theme', 'light');
 	window.addEventListener('theme-change', (event) => {
 		const themeLight = window.sessionStorage.getItem('theme') === 'light';
 		// @ts-ignore
@@ -96,5 +97,9 @@ import PageContent from '../components/PageContent.astro';
 		display: flex;
 		align-items: stretch;
 		justify-content: stretch;
+
+		&:first-child() {
+			z-index: 2;
+		}
 	}
 </style>
