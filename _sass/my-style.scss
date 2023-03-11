@@ -17,6 +17,23 @@
   font-weight: bold;
 }
 
+.sidebar {
+  &:not(.invert) {
+    .logo {
+      img.logo-invert {
+        display: none;
+      }
+    }
+  }
+  &.invert {
+    .logo {
+      img:not(.logo-invert) {
+        display: none;
+      }
+    }
+  }
+}
+
 // .lead.aspect-ratio.sixteen-nine { 
 //   border: 1px solid var(--border-color);
 //   transition: border-color 500ms ease;

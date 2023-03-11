@@ -74,20 +74,6 @@ hy-drawer {
   color: rgba(255, 255, 255, .75);
   text-align: center;
   min-height: 100vh;
-  &:not(.invert) {
-    .logo {
-      img.logo-invert {
-        display: none;
-      }
-    }
-  }
-  &.invert {
-    .logo {
-      img:not(.logo-invert) {
-        display: none;
-      }
-    }
-  }
 
   &.invert { color: rgba(32, 32, 32, .75) }
   // >>>
