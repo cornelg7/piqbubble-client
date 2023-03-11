@@ -5,4 +5,4 @@ sitemap: false
 
 # Cookies
 
-TBD
+{% include cookie-declaration.html %}
