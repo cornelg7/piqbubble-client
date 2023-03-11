@@ -337,8 +337,6 @@ exclude:
   - .sass-cache
   - '*.toml'
   - vendor
-  - Gemfile
-  - Gemfile.lock
 include:
   - .well-known
 
