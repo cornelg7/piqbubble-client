@@ -1,0 +1,123 @@
+# If you have a `resume.json` file, copy it into `_data` and delete this file.
+# If you don't have a JSON Resume you can just edit this YAML file instead.
+# See also: <https://jsonresume.org/>.
+basics:
+  name: "Cornel Goran"
+  label: "Front-end developer"
+  picture: "/assets/img/me.png"
+  email: "cornel@piqbubble.com"
+  phone: "+40745511231"
+  website: "https://piqbubble.com"
+  summary: >
+    Dedicated and detail-oriented Front-end developer with 2+ years of professional experience. 
+    Eager to implement products that follow up-to-date best practices. 
+    Special interest in building cool apps and writing clean reusable code. 
+    Proud of my work and always looking to learn more!
+  location:
+    city: "Brasov"
+    countryCode: "RO"
+  profiles:
+    - network: "Twitter"
+      username: "cornelg_"
+      url: "https://twitter.com/cornelg_"
+    - network: "LinkedIn"
+      username: "cgoran"
+      url: "https://www.linkedin.com/in/cgoran"
+    - network: "GitHub"
+      username: "cornelg7"
+      url: "https://github.com/cornelg7"
+work:
+  - company: "3S Studio - Sked24"
+    position: "Angular developer"
+    website: "https://3sstudio.com/"
+    startDate: "2020-11-01"
+    endDate: ""
+    summary: >
+      Sked24 is a large, versatile product that medical providers all across Chile use for managing time, handling physicians, scheduling appointments, and more.
+      <br>
+      As an Angular developer within a product-centered small agile team, I work closely with the back-end team to bring the API to life.
+      In the bi-weekly meetings, we discuss the implementation of new long-lasting features and the best way to maintain the product.
+    responsibilities:
+      - "Work closely with the RESTful API by building OData queries and mapping JSON requests and responses"
+      - "Build consistent interface designs with a focus on user experience, responsiveness, and legacy browser support"
+      - "Follow current and company best practices in regards to, but not limited to, Git version control naming, ESLint / TSLint configurations, code in general"
+      - "Apply the scout rule on a daily basis: 'Always leave the code better than you found it'"
+      - "Manage NPM packages and retention rules on MyGet"
+      - "Closely review teammates' pull requests and improve upon them by asking deep related questions and helping out when possible"
+      - "Publish changes directly to the clients with TeamCity and Octopus Deploy"
+    highlights:
+      - "Implemented and optimized the new version of the patient app used to book over 500K appointments each month"
+      - "Vastly improved developer experience and code efficiency by writing AutoHotkey scripts for the team"
+      - "Built an easy-to-use PDF + Image viewer with features such as zooming, rotating, and printing"
+      - "Reduced Jasmine test times by analyzing and optimizing the tests"
+      - "Implemented complex filters logic for searching appointment slots"
+      - "Added a lite version for one of the libraries created by the company by utilizing the same codebase and NPM scripts"
+      - "Implemented multiple calendars for scheduling with FullCalendar"
+      - "Built a developer- and user- friendly interface from scratch for managing configurations with reusable and consistent components"
+      - "Greatly reduced the development time for a feature type by utilizing Angular Schematics"
+education:
+  - institution: "University of Oxford"
+    area: "Computer Science"
+    studyType: "Bachelor of Arts"
+    startDate: "2016-10-01"
+    endDate: "2019-06-01"
+skills:
+  - name: "Web Development (Front-end)"
+    level: "Master"
+    keywords:
+      - "Angular 2+"
+      - "Typescript"
+      - "Javascript"
+      - "HTML"
+      - "CSS"
+      - "RxJS"
+      - "lodash"
+      - "moment.js"
+      - "SASS"
+      - "Git"
+      - "Confluence"
+      - "Jira"
+      - "Agile"
+  - name: "Web Development (Back-end)"
+    level: "Novice"
+    keywords:
+      - "Firebase"
+      - "AWS"
+      - "Node.js"
+      - "Next.js"
+      - "SvelteKit"
+  - name: "Web Development (Deployment)"
+    level: "Intermediate"
+    keywords:
+      - "Cloudflare"
+      - "Vercel"
+      - "Netlify"
+  - name: "Soft skills"
+    level: "Expert"
+    keywords:
+      - "Observation"
+      - "Decision making"
+      - "Self-sufficient"
+      - "Communication"
+      - "Multi-tasking"
+      - "Open-mindedness"
+      - "Adaptable"
+      - "Efficient"
+      - "Creative"
+      - "Automation"
+      - "Willingness to learn something new"
+      - "Always up for a challenge"
+      - "Attention to details"
+languages:
+  - language: "English"
+    fluency: "Full professional proficiency"
+  - language: "Romanian"
+    fluency: "Native speaker"
+interests:
+  - name: "Puzzles"
+    keywords:
+      - "Logic"
+      - "ARG"
+  - name: "Games"
+    keywords:
+      - "League of Legends"
