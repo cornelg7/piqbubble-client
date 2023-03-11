@@ -25,8 +25,7 @@ title:                 Piqbubble
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
-  Hey there! I'm a front-end developer with a knack for automation and a passion for writing efficient code.
-  Check out my portfolio, and let's chat about your next project - I can't wait to help bring your ideas to life!
+  Front-end developer with a knack for automation and a passion for writing efficient code.
 
 # A shorter description for the sidebar.
 tagline:               Front-end developer with a knack for automation
@@ -46,7 +45,7 @@ apple_touch_icon: /assets/icons/favicon.svg
 # This should be the same author as first entry in `_data/authors.yml`.
 author:
   # Used by `jekyll-feed`:
-  name:                Cornel
+  name:                Cornel Goran
   email:               cornel@piqbubble.com
   # # Used by `jekyll-seo-tag`:
   twitter:             cornelg_
@@ -57,16 +56,16 @@ menu:
     url:               /blog/
   - title:             Projects
     url:               /projects/
-  - title:             Résumé*
+  - title:             Résumé
     url:               /resume/
-#  - title:             Documentation
-#    url:               /docs/
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
 legal:
-  - title:             COOKIES
-    url:               /COOKIES/
+  - title:             Cookies
+    url:               /cookies/
+  - title:             Comment policy
+    url:               /comment-policy/
 
 # This text will appear in a `<small>` tag in the footer of every page.
 copyright:             © 2023. All rights reserved.
@@ -116,6 +115,16 @@ font_code:             Fira Code, Menlo, Monaco, Consolas, monospace;
 defaults:
   # You can use this to provide a default accent color and background for
   # all pages under a given path:
+#  - scope:
+#      category:        puzzles
+#    values:
+#      accent_color:    rgb(222,222,210)
+#      theme_color:     rgb(32,32,32)
+#      accent_image:
+#        background:    rgb(66,32,32)
+#        overlay:       false
+#      invert_sidebar:  true
+
 #  - scope:
 #      path:            blog/
 #    values:
@@ -185,14 +194,15 @@ kramdown:
 # Set your Google Analytics id to receive `pageview` events.
 # To remove Google Anaylics from your page, remove the line below.
 # google_analytics:      UA-XXXXXXXX-X
+is_google_analytics_enabled:           true
 
 # Setting a disqus shortname will enable the comment section on
 # pages with `comments: true` in the front matter.
-# disqus:                <username>
+disqus:                piqbubble
 
 # Setting a tinyletter username will enable the newsletter subscription box.
 # PRO version only!
-# tinyletter:            <username>
+tinyletter:            piqbubble
 
 
 # Hydejack Settings
@@ -201,7 +211,7 @@ kramdown:
 
 hydejack:
   # Configure the order of complementary content on blog posts
-  post_addons:         [about, newsletter, related, random, comments]
+  post_addons:         [about, newsletter, related, comments]
 
   # Configure the order of complementary content on project pages
   project_addons:      [about, newsletter, other, comments]
@@ -331,7 +341,6 @@ exclude:
   - Gemfile.lock
 include:
   - .well-known
-  - LICENSE.md
 
 
 # Plugins
@@ -375,11 +384,11 @@ plugins:
 #   admins:              <id>
 
 # Used on index and about sites
-# social:
-#   name:                <firstname> <lastname>
-#   links:
-#     - https://twitter.com/<username>
-#     - https://github.com/<username>
+social:
+  name:                Cornel Goran
+  links:
+    - https://twitter.com/cornelg_
+    - https://github.com/cornelg7
 
 
 # Plugin Configs

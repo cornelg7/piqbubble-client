@@ -1,8 +1,6 @@
 ---
 layout: about
-title: Hello world!
-sitemap: false
-cover: true
+title:  About
 ---
 
 <!--author-->

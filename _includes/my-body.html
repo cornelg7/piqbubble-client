@@ -12,6 +12,18 @@
   });
 </script> -->
 
+{% if is_google_analytics_enabled %}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YK39FTQEMB"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YK39FTQEMB');
+</script>
+{% endif %}
+
 <!--
 Code for integrating CloudFlare's email protection with Hydejack's single page app loading.
 -->

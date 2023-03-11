@@ -105,9 +105,8 @@ tinyletter:
   placeholder:         Enter your email address
   button:              Subscribe
   message:             |
-    Pay the *iron price* for this theme by adding yourself to the mailing list.
-    Receive development updates, advanced tutorials,
-    and anything else I can come up with as it relates to **Hydejack**.
+    Introducing my new newsletter, where I'll be sharing random musings and updates. 
+    I'm not quite sure what it will be about yet, but I promise to keep it fun and personal.
 
     <!--form-->
 
@@ -130,7 +129,7 @@ resume:
   volunteer:           Volunteer
   volunteer_title:     <!--position--> at <!--organization-->
   education:           Education
-  education_title:     <!--study_type--> in <!--area--> from <!--institution--> with GPA of <!--gpa-->
+  education_title:     <!--study_type--> in <!--area--> from <!--institution-->
   courses:             Courses
   awards:              Awards
   awards_title:        <!--title--> from <!--awarder-->

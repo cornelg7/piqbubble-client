@@ -32,8 +32,17 @@
 
     {% include components/message.html class="note" text=work.summary alt="" %}
 
+    {% if work.responsibilities.size > 0 %}
+    <p class="font-weight-bold">{{ strings.resume.responsibilities | default:"Key responsibilities" }}</p>
+    <ul>
+      {% for responsibility in work.responsibilities %}
+      <li>{{ responsibility }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
     {% if work.highlights.size > 0 %}
-    <h4 class="sr-only">{{ strings.resume.highlights | default:"Highlights" }}</h4>
+    <p class="font-weight-bold">{{ strings.resume.highlights | default:"Highlights" }}</p>
     <ul>
       {% for highlight in work.highlights %}
         <li>{{ highlight }}</li>

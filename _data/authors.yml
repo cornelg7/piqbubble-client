@@ -1,34 +1,33 @@
 # The primary author of this blog.
 # Must be the same as `author` in `_config.yml`.
 # Change `author1` to your shortname.
-author1:
-  name:              <firstname> <lastname>
-  email:             <mail@domain.tld>
+cornel:
+  name:              Cornel Goran
+  email:             cornel@piqbubble.com
 
   # Used at the bottom of each page and at the top of the `about` layout
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    
-    Open `_data/authors.yml` to edit this text.
+    Hey there, welcome! My name is Cornel, and I'm a builder and a front-end developer. I created this website to share my thoughts and ideas on various topics and showcase my work experience and projects. 
+    I'm passionate about automation and love learning and exploring new things. In my free time, I enjoy solving puzzles and riddles, and I'm always looking for new ways to challenge myself.
 
   # This photo will be used in the about section
   picture:
-    path:            https://placehold.it/128x128
+    path:            /assets/img/me05.png
     # srcset is optional, but can be used to provide higher res versions for retina displays
     srcset:
-      1x:            https://placehold.it/128x128
-      2x:            https://placehold.it/256x256
+      1x:            /assets/img/me05.png
+      2x:            /assets/img/me.png
 
   # Social media icons in sidebar
   # Comment/uncommet to show/hide
   # Rearrange to change the order in which they appear
   social:
-    twitter:         <username>
-    github:          <username>
-    # email:           <mail@domain.tld>
+    twitter:         cornelg_
+    github:          cornelg7
+    email:           cornel@piqbubble.com
+    linkedin:        cgoran
+    download:        /assets/Goran C Resume.pdf
     # rss:             https://<url>/feed.xml
     # facebook:        <username>
     # google:          <number>
