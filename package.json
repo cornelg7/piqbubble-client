@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "bundle exec jekyll serve"
+    "start": "bundle exec jekyll serve",
+    "build": "bundle exec jekyll build"
   },
   "dependencies": {
     "re-template-tag": "^2.0.1"
