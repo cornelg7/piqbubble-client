@@ -24,12 +24,12 @@ I've been working with the Sked24 team since 2020. In my time here, I implemente
 
 - Implemented and optimized the new version of the patient app used to book over 500K appointments each month
 
-![Patient app](/assets/img/projects/sked24/patient-app.jpg)
+[//]: # (![Patient app]&#40;/assets/img/projects/sked24/patient-app.jpg&#41;)
 
 - Vastly improved developer experience and code efficiency by writing AutoHotkey scripts for the team
 - Built an easy-to-use PDF + Image viewer with features such as zooming, rotating, and printing
 
-![Patient app](/assets/img/projects/sked24/img-pdf-viewer.jpg)
+[//]: # (![Patient app]&#40;/assets/img/projects/sked24/img-pdf-viewer.jpg&#41;)
 
 - Reduced Jasmine test times by analyzing and optimizing the tests
 - Implemented complex filters logic for searching appointment slots
