@@ -14,6 +14,6 @@ image:
 links:
   - title: Link
     url: https://piqbubble.com/
-sitemap: false
+sitemap: true
 comments: true
 ---
