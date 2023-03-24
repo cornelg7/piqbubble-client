@@ -9,8 +9,8 @@ image:
   path: /assets/img/projects/this-site.jpg
   srcset: 
     1920w: /assets/img/projects/this-site.jpg
-    960w:  /assets/img/projects/this-site@0,5x.jpg
-    480w:  /assets/img/projects/this-site@0,25x.jpg
+    580w:  /assets/img/projects/this-site@0,5x.jpg
+    360w:  /assets/img/projects/this-site@0,25x.jpg
 links:
   - title: Link
     url: https://piqbubble.com/
