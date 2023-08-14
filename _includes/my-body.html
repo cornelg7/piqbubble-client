@@ -14,14 +14,19 @@
 
 {% if site.is_google_analytics_enabled %}
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YK39FTQEMB"></script>
-<script>
+<script data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-XQWEB667P0"></script>
+<script data-cookieconsent="statistics">
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-YK39FTQEMB');
+    gtag('config', 'G-XQWEB667P0');
 </script>
+{% endif %}
+
+{% if site.is_google_ads_enabled %}
+<script data-cookieconsent="marketing" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5589120422417269"
+        crossorigin="anonymous"></script>
 {% endif %}
 
 <!--
